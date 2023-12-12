@@ -1,5 +1,7 @@
 package ru.mts;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Класс Price содержит 3 параметра:
@@ -8,32 +10,32 @@ package ru.mts;
  * 3) скидка на товар
  * А также имеет 2 конструктора, геттеры и сеттеры
  */
-public class Price {
+public class OrderLine {
 
     int numberOfProducts; // количество товаров
-    double sumOfProducts; // сумма товара
-    double discountOnProduct; // скидка на товар
+    BigDecimal sumOfProducts; // сумма товара
+    BigDecimal discountOnProduct; // скидка на товар
 
     /**
      * @param numberOfProducts  Количество товаров
      * @param sumOfProducts     Сумма товаров
      * @param discountOnProduct Скидка на товар
      */
-    public Price(int numberOfProducts, double sumOfProducts, double discountOnProduct) {
-        if (numberOfProducts <= 0 || sumOfProducts <= 0) {
+    public OrderLine(int numberOfProducts, BigDecimal sumOfProducts, BigDecimal discountOnProduct) {
+        if (numberOfProducts <= 0 || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Количество товаров и сумма товаров должны быть больше 0");
         }
         this.numberOfProducts = numberOfProducts;
-        this.sumOfProducts = sumOfProducts;
-        this.discountOnProduct = discountOnProduct;
+        this.sumOfProducts = sumOfProducts.setScale(2, RoundingMode.HALF_UP);
+        this.discountOnProduct = discountOnProduct.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public Price(int numberOfProducts, double sumOfProducts) {
-        if (numberOfProducts <= 0 || sumOfProducts <= 0) {
+    public OrderLine(int numberOfProducts, BigDecimal sumOfProducts) {
+        if (numberOfProducts <= 0 || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Количество товаров и сумма товаров должны быть больше 0");
         }
         this.numberOfProducts = numberOfProducts;
-        this.sumOfProducts = sumOfProducts;
+        this.sumOfProducts = sumOfProducts.setScale(2, RoundingMode.HALF_UP);
     }
 
     //Геттеры
@@ -41,11 +43,11 @@ public class Price {
         return numberOfProducts;
     }
 
-    public double getSumOfProducts() {
+    public BigDecimal getSumOfProducts() {
         return sumOfProducts;
     }
 
-    public double getDiscountOnProduct() {
+    public BigDecimal getDiscountOnProduct() {
         return discountOnProduct;
     }
 
@@ -54,11 +56,11 @@ public class Price {
         this.numberOfProducts = numberOfProducts;
     }
 
-    public void setSumOfProducts(double sumOfProducts) {
-        this.sumOfProducts = sumOfProducts;
+    public void setSumOfProducts(BigDecimal sumOfProducts) {
+        this.sumOfProducts = sumOfProducts.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public void setDiscountOnProduct(double discountOnProduct) {
-        this.discountOnProduct = discountOnProduct;
+    public void setDiscountOnProduct(BigDecimal discountOnProduct) {
+        this.discountOnProduct = discountOnProduct.setScale(2, RoundingMode.HALF_UP);
     }
 }

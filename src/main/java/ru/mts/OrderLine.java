@@ -2,6 +2,7 @@ package ru.mts;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  * Класс Price содержит 3 параметра:
@@ -12,9 +13,9 @@ import java.math.RoundingMode;
  */
 public class OrderLine {
 
-    int numberOfProducts; // количество товаров
-    BigDecimal sumOfProducts; // сумма товара
-    BigDecimal discountOnProduct; // скидка на товар
+    private int numberOfProducts; // количество товаров
+    private BigDecimal sumOfProducts; // сумма товара
+    private BigDecimal discountOnProduct; // скидка на товар
 
     /**
      * @param numberOfProducts  Количество товаров
@@ -22,7 +23,7 @@ public class OrderLine {
      * @param discountOnProduct Скидка на товар
      */
     public OrderLine(int numberOfProducts, BigDecimal sumOfProducts, BigDecimal discountOnProduct) {
-        if (numberOfProducts <= 0 || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
+        if (numberOfProducts <= 0 || Objects.isNull(sumOfProducts) || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Количество товаров и сумма товаров должны быть больше 0");
         }
         this.numberOfProducts = numberOfProducts;
@@ -30,8 +31,9 @@ public class OrderLine {
         this.discountOnProduct = discountOnProduct.setScale(2, RoundingMode.HALF_UP);
     }
 
+    @SuppressWarnings("unused")
     public OrderLine(int numberOfProducts, BigDecimal sumOfProducts) {
-        if (numberOfProducts <= 0 || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
+        if (numberOfProducts <= 0 || Objects.isNull(sumOfProducts) || sumOfProducts.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Количество товаров и сумма товаров должны быть больше 0");
         }
         this.numberOfProducts = numberOfProducts;
@@ -52,14 +54,17 @@ public class OrderLine {
     }
 
     //Сеттеры
+    @SuppressWarnings("unused")
     public void setNumberOfProducts(int numberOfProducts) {
         this.numberOfProducts = numberOfProducts;
     }
 
+    @SuppressWarnings("unused")
     public void setSumOfProducts(BigDecimal sumOfProducts) {
-        this.sumOfProducts = sumOfProducts.setScale(2, RoundingMode.HALF_UP);
+        this.sumOfProducts = Objects.isNull(sumOfProducts) ? null : sumOfProducts.setScale(2, RoundingMode.HALF_UP);
     }
 
+    @SuppressWarnings("unused")
     public void setDiscountOnProduct(BigDecimal discountOnProduct) {
         this.discountOnProduct = discountOnProduct.setScale(2, RoundingMode.HALF_UP);
     }

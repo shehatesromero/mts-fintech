@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17df2db2-9014-4297-ab2e-01ebd686dc11" name="Changes" comment="HW-3: Constructor overloads have been added">
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Cat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Cat.java" afterDir="false" />
-    </list>
+    <list default="true" id="17df2db2-9014-4297-ab2e-01ebd686dc11" name="Changes" comment="HW-3.1: The code has been formatted" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -180,7 +178,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702975961034</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="HW-3.1: The code has been formatted">
+      <option name="closed" value="true" />
+      <created>1702976157742</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702976157742</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +215,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="HW-1.1: Disadvantages have been changed" />
     <MESSAGE value="HW-3: Constructor overloads have been added" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW-3: Constructor overloads have been added" />
+    <MESSAGE value="HW-3.1: The code has been formatted" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW-3.1: The code has been formatted" />
   </component>
 </project>

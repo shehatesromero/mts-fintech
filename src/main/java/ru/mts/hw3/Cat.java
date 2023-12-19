@@ -23,7 +23,6 @@ public class Cat extends Pet {
         this.cost = cost.setScale(2, RoundingMode.HALF_UP);
     }
 
-
     @Override
     public String toString() {
         return "Cat{" +

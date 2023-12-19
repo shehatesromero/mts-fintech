@@ -5,19 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17df2db2-9014-4297-ab2e-01ebd686dc11" name="Changes" comment="HW-1.1: Disadvantages have been changed">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/AbstractAnimal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Animal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Cat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/CreateAnimalService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/CreateAnimalServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/CreateOneUniqueAnimal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Dog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Pet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Predator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Shark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Wolf.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/OrderLine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Cat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Cat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Dog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Dog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Shark.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Shark.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Wolf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw3/Wolf.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

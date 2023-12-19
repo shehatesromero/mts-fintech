@@ -10,6 +10,14 @@ import java.math.RoundingMode;
  * для удобного вывода информации о нем.
  */
 public class Wolf extends Predator {
+    @SuppressWarnings("unused")
+    public Wolf(String breed, String name, BigDecimal cost, String character) {
+        this.breed = breed;
+        this.name = name;
+        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
+        this.character = character;
+    }
+
     public Wolf(String breed, String name, BigDecimal cost) {
         this.breed = breed;
         this.name = name;

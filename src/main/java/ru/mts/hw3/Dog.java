@@ -9,6 +9,13 @@ import java.math.RoundingMode;
  * переопределение метода toString() для удобного вывода информации о собаке.
  */
 public class Dog extends Pet {
+    @SuppressWarnings("unused")
+    public Dog(String breed, String name, BigDecimal cost, String character) {
+        this.breed = breed;
+        this.name = name;
+        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
+        this.character = character;
+    }
 
     public Dog(String breed, String name, BigDecimal cost) {
         this.breed = breed;

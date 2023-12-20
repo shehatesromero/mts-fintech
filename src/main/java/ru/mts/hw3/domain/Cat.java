@@ -1,7 +1,8 @@
-package ru.mts.hw3;
+package ru.mts.hw3.domain;
+
+import ru.mts.hw3.domain.abstraction.Pet;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Класс Cat представляет собой конкретную реализацию животного, являющегося домашним питомцем,
@@ -9,27 +10,14 @@ import java.math.RoundingMode;
  * и параметры для представления кота в контексте домашнего животного.
  */
 public class Cat extends Pet {
+
     @SuppressWarnings("unused")
     public Cat(String breed, String name, BigDecimal cost, String character) {
-        this.breed = breed;
-        this.name = name;
-        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
-        this.character = character;
+        super(breed, name, cost, character);
     }
 
     public Cat(String breed, String name, BigDecimal cost) {
-        this.breed = breed;
-        this.name = name;
-        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
+        super(breed, name, cost);
     }
 
-    @Override
-    public String toString() {
-        return "Cat{" +
-                "breed='" + breed + '\'' +
-                ", name='" + name + '\'' +
-                ", cost=" + cost +
-                ", character='" + character + '\'' +
-                '}';
-    }
 }

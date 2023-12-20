@@ -1,4 +1,4 @@
-package ru.mts.hw3;
+package ru.mts.hw3.domain.abstraction;
 
 import java.math.BigDecimal;
 
@@ -8,15 +8,13 @@ import java.math.BigDecimal;
  * о своей породе, имени, стоимости и характере.
  */
 public interface Animal {
-    @SuppressWarnings("unused")
+
     String getBreed();
 
-    @SuppressWarnings("unused")
     String getName();
 
-    @SuppressWarnings("unused")
     BigDecimal getCost();
 
-    @SuppressWarnings("unused")
     String getCharacter();
+
 }

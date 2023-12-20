@@ -1,4 +1,7 @@
-package ru.mts.hw3;
+package ru.mts.hw3.service;
+
+import ru.mts.hw3.domain.abstraction.Animal;
+import ru.mts.hw3.factory.AnimalSimpleFactory;
 
 /**
  * Интерфейс CreateAnimalService предоставляет абстракцию для создания животных.
@@ -6,14 +9,20 @@ package ru.mts.hw3;
  * с использованием реализации интерфейса CreateOneUniqueAnimal.
  */
 public interface CreateAnimalService {
+
     // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию.
-    default void createUniqueAnimals() {
+    default int createUniqueAnimals() {
         int animalCounter = 0;
-        CreateOneUniqueAnimal a = new CreateOneUniqueAnimal();
+
+        Animal animal;
         while (animalCounter < 10) {
-            System.out.println(a.createOneUniqueAnimal());
+            animal = AnimalSimpleFactory.createOneUniqueAnimal();
+            System.out.println(animal);
+
             animalCounter++;
         }
 
+        return animalCounter;
     }
+
 }

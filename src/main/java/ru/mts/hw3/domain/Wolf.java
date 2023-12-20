@@ -1,7 +1,8 @@
-package ru.mts.hw3;
+package ru.mts.hw3.domain;
+
+import ru.mts.hw3.domain.abstraction.Predator;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 /**
  * Класс Wolf представляет собой конкретную реализацию хищного животного - волка,
@@ -10,27 +11,14 @@ import java.math.RoundingMode;
  * для удобного вывода информации о нем.
  */
 public class Wolf extends Predator {
+
     @SuppressWarnings("unused")
     public Wolf(String breed, String name, BigDecimal cost, String character) {
-        this.breed = breed;
-        this.name = name;
-        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
-        this.character = character;
+        super(breed, name, cost, character);
     }
 
     public Wolf(String breed, String name, BigDecimal cost) {
-        this.breed = breed;
-        this.name = name;
-        this.cost = cost.setScale(2, RoundingMode.HALF_UP);
+        super(breed, name, cost);
     }
 
-    @Override
-    public String toString() {
-        return "Wolf{" +
-                "breed='" + breed + '\'' +
-                ", name='" + name + '\'' +
-                ", cost=" + cost +
-                ", character='" + character + '\'' +
-                '}';
-    }
 }

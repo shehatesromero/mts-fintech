@@ -1,6 +1,14 @@
-package ru.mts.hw3;
+package ru.mts.hw3.factory;
+
+import ru.mts.hw3.domain.Cat;
+import ru.mts.hw3.domain.Dog;
+import ru.mts.hw3.domain.Shark;
+import ru.mts.hw3.domain.Wolf;
+import ru.mts.hw3.domain.abstraction.Animal;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -8,14 +16,27 @@ import java.util.Random;
  * с использованием случайной генерации имени, породы и стоимости. Класс обеспечивает создание экземпляров
  * различных подклассов Animal (Dog, Cat, Shark, Wolf) в зависимости от случайно сгенерированного числа.
  */
-public class CreateOneUniqueAnimal {
+public final class AnimalSimpleFactory {
+
+    private static final Map<Integer, List<String>> BREEDS_DATASET = Map.of(
+            0, List.of("Terrier", "Boxer", "Bolognese", "Bulldog", "Chihuahua", "Collie", "Mops", "Spitz", "Labrador", "Mastiff"),
+            1, List.of("Siamese", "Persian", "Sphynx", "Asian", "Bengal", "Burmilla", "Foldex", "German Rex", "Kinkalow", "Minskin"),
+            2, List.of("Dogfish", "Angel", "Sawsharks", "Bullhead", "Carpet", "Ground", "Bali catshark", "Blind", "Blue", "Borneo"),
+            3, List.of("Tundra", "Arabian", "Steppe", "Himalayan", "Mongolian", "Eurasian", "Indian", "Arctic", "Mexican", "Eastern")
+    );
+
+    private AnimalSimpleFactory() {
+    }
+
     // Метод createOneUniqueAnimal() создает одно уникальное животное с случайно сгенерированными параметрами.
-    public Animal createOneUniqueAnimal() {
+    public static Animal createOneUniqueAnimal() {
         Random random = new Random();
+
         int randomNum = random.nextInt(4);
         String breed = generateRandomBreed(randomNum);
         String name = generateRandomName();
         BigDecimal cost = generateRandomCost();
+
         switch (randomNum) {
             case 0:
                 return new Dog(breed, name, cost);
@@ -26,45 +47,39 @@ public class CreateOneUniqueAnimal {
             case 3:
                 return new Wolf(breed, name, cost);
             default:
-                return null;
+                throw new UnsupportedOperationException("Unsupported animal type");
         }
+
     }
 
     // Метод generateRandomBreed(int randomNum) генерирует случайную породу в зависимости от переданного числа.
-    private String generateRandomBreed(int randomNum) {
-        Random random = new Random();
-        switch (randomNum) {
-            case 0: // Для собаки
-                String[] dogBreeds = {"Terrier", "Boxer", "Bolognese", "Bulldog", "Chihuahua", "Collie", "Mops",
-                        "Spitz", "Labrador", "Mastiff"};
-                return dogBreeds[random.nextInt(dogBreeds.length)];
-            case 1: // Для кошки
-                String[] catBreeds = {"Siamese", "Persian", "Sphynx", "Asian", "Bengal", "Burmilla", "Foldex",
-                        "German Rex", "Kinkalow", "Minskin"};
-                return catBreeds[random.nextInt(catBreeds.length)];
-            case 2: // Для акулы
-                String[] sharkBreeds = {"Dogfish", "Angel", "Sawsharks", "Bullhead", "Carpet", "Ground", "Bali catshark",
-                        "Blind", "Blue", "Borneo"};
-                return sharkBreeds[random.nextInt(sharkBreeds.length)];
-            case 3: // Для волка
-                String[] wolfBreeds = {"Tundra", "Arabian", "Steppe", "Himalayan", "Mongolian", "Eurasian", "Indian",
-                        "Arctic", "Mexican", "Eastern"};
-                return wolfBreeds[random.nextInt(wolfBreeds.length)];
-            default:
-                return "Unknown Breed";
+    private static String generateRandomBreed(int randomNum) {
+        List<String> list = BREEDS_DATASET.get(randomNum);
+        if (list == null) {
+            return "Unknown Breed";
         }
+
+        Random random = new Random();
+
+        return list.get(random.nextInt(list.size()));
     }
 
     // Метод generateRandomName() генерирует случайное имя для животного.
-    private String generateRandomName() {
+    private static String generateRandomName() {
+        List<String> possibleNames = List.of(
+                "Buddy", "Whiskers", "Fang", "Shadow", "Luna", "Rex", "Misty", "Rocky", "Cleo", "Thor"
+        );
+
         Random random = new Random();
-        String[] possibleNames = {"Buddy", "Whiskers", "Fang", "Shadow", "Luna", "Rex", "Misty", "Rocky", "Cleo", "Thor"};
-        return possibleNames[random.nextInt(possibleNames.length)];
+
+        return possibleNames.get(random.nextInt(possibleNames.size()));
     }
 
     // Метод generateRandomCost() генерирует случайную стоимость для животного.
-    private BigDecimal generateRandomCost() {
+    private static BigDecimal generateRandomCost() {
         Random random = new Random();
+
         return BigDecimal.valueOf(random.nextDouble() * 50000.0);
     }
+
 }

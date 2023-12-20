@@ -1,4 +1,6 @@
-package ru.mts.hw3;
+package ru.mts.hw3.domain.abstraction;
+
+import java.math.BigDecimal;
 
 /**
  * Абстрактный класс Predator является подклассом класса AbstractAnimal и представляет общие характеристики
@@ -7,7 +9,13 @@ package ru.mts.hw3;
  * реализации в его конкретных подклассах.
  */
 public abstract class Predator extends AbstractAnimal {
-    Predator() {
-        this.character = "Angry";
+
+    protected Predator(String breed, String name, BigDecimal cost, String character) {
+        super(breed, name, cost, character);
     }
+
+    protected Predator(String breed, String name, BigDecimal cost) {
+        super(breed, name, cost, "Angry");
+    }
+
 }

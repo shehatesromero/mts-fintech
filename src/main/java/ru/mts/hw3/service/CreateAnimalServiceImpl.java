@@ -1,4 +1,7 @@
-package ru.mts.hw3;
+package ru.mts.hw3.service;
+
+import ru.mts.hw3.domain.abstraction.Animal;
+import ru.mts.hw3.factory.AnimalSimpleFactory;
 
 /**
  * Класс CreateAnimalServiceImpl предоставляет конкретную реализацию интерфейса CreateAnimalService.
@@ -8,14 +11,17 @@ package ru.mts.hw3;
  * через метод createUniqueAnimals(int n).
  */
 public class CreateAnimalServiceImpl implements CreateAnimalService {
+
     // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию при помощи цикла do while.
-    public void createUniqueAnimals() {
+    public int createUniqueAnimals() {
         int animalCounter = 0;
-        CreateOneUniqueAnimal a = new CreateOneUniqueAnimal();
+
         do {
-            System.out.println(a.createOneUniqueAnimal());
-            animalCounter++;
+            animalCounter += CreateAnimalService.super.createUniqueAnimals();
+
         } while (animalCounter < 10);
+
+        return animalCounter;
     }
 
     /**
@@ -23,9 +29,12 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * при помощи цикла for
      */
     public void createUniqueAnimals(int n) {
-        CreateOneUniqueAnimal a = new CreateOneUniqueAnimal();
+        Animal animal;
         for (int i = 0; i < n; i++) {
-            System.out.println(a.createOneUniqueAnimal());
+            animal = AnimalSimpleFactory.createOneUniqueAnimal();
+
+            System.out.println(animal);
         }
+
     }
 }

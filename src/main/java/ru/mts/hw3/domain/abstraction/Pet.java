@@ -1,4 +1,6 @@
-package ru.mts.hw3;
+package ru.mts.hw3.domain.abstraction;
+
+import java.math.BigDecimal;
 
 /**
  * Абстрактный класс Pet является подклассом класса AbstractAnimal и представляет общие характеристики
@@ -7,7 +9,13 @@ package ru.mts.hw3;
  * реализации в его конкретных подклассах.
  */
 public abstract class Pet extends AbstractAnimal {
-    Pet() {
-        this.character = "Kind";
+
+    protected Pet(String breed, String name, BigDecimal cost, String character) {
+        super(breed, name, cost, character);
     }
+
+    protected Pet(String breed, String name, BigDecimal cost) {
+        super(breed, name, cost, "Kind");
+    }
+
 }

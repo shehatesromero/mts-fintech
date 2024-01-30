@@ -4,30 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17df2db2-9014-4297-ab2e-01ebd686dc11" name="Changes" comment="HW-4: Homework is done">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/Cat.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/Dog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/Shark.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/Wolf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/abstraction/AbstractAnimal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/abstraction/Animal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/abstraction/Instance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/abstraction/Pet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/abstraction/Predator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/domain/enums/AnimalType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/factory/AnimalFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/factory/AnimalFactoryImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/factory/AnimalSimpleFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/factory/Factory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/service/CreateAnimalService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/service/CreateAnimalServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/service/SearchService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/mts/hw5/service/SearchServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/ru/mts/hw5/MainTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="17df2db2-9014-4297-ab2e-01ebd686dc11" name="Changes" comment="HW-5: Homework is done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -329,7 +306,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703706924885</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="HW-5: Homework is done">
+      <option name="closed" value="true" />
+      <created>1706642995891</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1706642995891</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -360,6 +345,7 @@
     <MESSAGE value="HW-3: Constructor overloads have been added" />
     <MESSAGE value="HW-3.1: The code has been formatted" />
     <MESSAGE value="HW-4: Homework is done" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW-4: Homework is done" />
+    <MESSAGE value="HW-5: Homework is done" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW-5: Homework is done" />
   </component>
 </project>

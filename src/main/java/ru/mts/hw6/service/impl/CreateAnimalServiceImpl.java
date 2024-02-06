@@ -1,10 +1,12 @@
 package ru.mts.hw6.service.impl;
 
 import ru.mts.hw6.domain.abstraction.Animal;
+import ru.mts.hw6.domain.enums.AnimalType;
 import ru.mts.hw6.factory.AnimalFactory;
 import ru.mts.hw6.service.CreateAnimalService;
 
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
@@ -19,12 +21,12 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     private final AnimalFactory animalFactory;
 
+    private AnimalType animalType;
+
     public CreateAnimalServiceImpl(AnimalFactory animalFactory) {
         checkArgument(Objects.nonNull(animalFactory), "'animalFactory' is null");
         this.animalFactory = animalFactory;
     }
-
-    private Animal animal;
 
     /**
      * Получить животное из поля Animal
@@ -32,16 +34,17 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @return Animal
      */
     @Override
-    public Animal getAnimal() {
-        return animal;
+    public Animal createAnimal() {
+        return animalFactory.createAnimal(animalType);
     }
 
     /**
      * Проинициализировать поле
      */
     @Override
-    public void initAnimal() {
-        animal = animalFactory.createRandomAnimal();
+    public void initAnimalType() {
+        int randCoefficient = ThreadLocalRandom.current().nextInt(0, 3);
+        animalType = AnimalType.values()[randCoefficient];
     }
 
     // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию при помощи цикла do while.

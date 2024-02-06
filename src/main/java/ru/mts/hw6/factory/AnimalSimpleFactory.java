@@ -40,12 +40,20 @@ public final class AnimalSimpleFactory {
         var types = AnimalType.values();
         int index = random.nextInt(types.length);
 
-        var breed = generateRandomBreed(index);
+        return createAnimal(types[index]);
+    }
+
+    public static Animal createAnimal(AnimalType animalType) {
+        if (animalType == null) {
+            throw new IllegalArgumentException("'animalType' is null");
+        }
+
+        var breed = generateRandomBreed(animalType.ordinal());
         var name = generateRandomName();
         var cost = generateRandomCost();
         var birthDate = randomBirthday();
 
-        switch (types[index]) {
+        switch (animalType) {
             case DOG:
                 return new Dog(breed, name, cost, birthDate);
             case CAT:

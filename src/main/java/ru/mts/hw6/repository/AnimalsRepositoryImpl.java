@@ -1,24 +1,45 @@
 package ru.mts.hw6.repository;
 
+import com.google.common.collect.Lists;
+import org.springframework.beans.factory.ObjectProvider;
 import ru.mts.hw6.domain.abstraction.Animal;
 import ru.mts.hw6.service.CreateAnimalService;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
 public class AnimalsRepositoryImpl implements AnimalsRepository {
-    protected List<Animal> animals;
-    CreateAnimalService animalService;
 
-    public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
-        this.animalService = createAnimalService;
+    private static final int CAPACITY = (Integer.MAX_VALUE / 100_000);
+
+    private final ObjectProvider<CreateAnimalService> createAnimalServicesBeanProvider;
+
+    private final List<Animal> animals = Lists.newArrayListWithCapacity(CAPACITY);
+
+    private boolean initialized;
+
+    public AnimalsRepositoryImpl(ObjectProvider<CreateAnimalService> createAnimalServicesBeanProvider) {
+        this.createAnimalServicesBeanProvider = createAnimalServicesBeanProvider;
     }
 
-    @PostConstruct
-    private void postConstruct() {
-        animals = List.of(animalService.createUniqueAnimals());
+    public void postConstruct() {
+        if (!initialized) {
+            Animal animal;
+            CreateAnimalService prototype;
+            for (int i = 0; i < CAPACITY; i++) {
+                prototype = createAnimalServicesBeanProvider.getIfAvailable();
+                if (Objects.isNull(prototype)) {
+                    throw new RuntimeException("Caramba! 'prototype' is null");
+                }
+
+                animal = prototype.createAnimal();
+                animals.add(animal);
+            }
+
+            initialized = true;
+        }
+
     }
 
     @Override
@@ -34,14 +55,15 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Animal[] findOlderAnimal(int N) {
+    public Animal[] findOlderAnimal(int n) {
         List<Animal> animalsReturn = new ArrayList<>();
 
         for (Animal animal : animals) {
-            if (Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > N) {
+            if (Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > n) {
                 animalsReturn.add(animal);
             }
         }
+
         return animalsReturn.toArray(new Animal[0]);
     }
 
@@ -57,10 +79,12 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 } else {
                     animalDuplicates.put(animal, 1);
                 }
+
             } else {
                 uniqueAnimals.add(animal);
             }
         }
+
         return animalDuplicates;
     }
 
@@ -70,8 +94,11 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalDuplicates.isEmpty()) {
             System.out.println("There is no duplicates");
         }
+
         for (Map.Entry<Animal, Integer> entry : animalDuplicates.entrySet()) {
             System.out.println(entry);
         }
+
     }
+
 }

@@ -6,18 +6,16 @@ import org.springframework.lang.Nullable;
 import ru.mts.hw6.service.CreateAnimalService;
 
 public class MyBeanPostProcessor implements BeanPostProcessor {
-    @Nullable
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        return bean;
-    }
 
     @Nullable
     @Override
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        if (bean instanceof CreateAnimalService){
-            ((CreateAnimalService) bean).initAnimal();
+    public Object postProcessAfterInitialization(@SuppressWarnings("NullableProblems") Object bean,
+                                                 @SuppressWarnings("NullableProblems") String beanName) throws BeansException {
+        if (bean instanceof CreateAnimalService) {
+            ((CreateAnimalService) bean).initAnimalType();
         }
+
         return bean;
     }
+
 }

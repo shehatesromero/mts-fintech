@@ -9,18 +9,20 @@ import ru.mts.hw6.factory.AnimalSimpleFactory;
  * с использованием реализации интерфейса CreateOneUniqueAnimal.
  */
 public interface CreateAnimalService {
+
+    String NAME = "mts_CreateAnimalService";
+
     /**
      * Получить животное
      *
      * @return Animal
      */
-    Animal getAnimal();
+    Animal createAnimal();
 
     /**
      * Проинициализировать поле
      */
-    void initAnimal();
-
+    void initAnimalType();
 
     // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию.
     default Animal[] createUniqueAnimals() {

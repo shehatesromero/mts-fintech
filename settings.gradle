@@ -1,2 +1,3 @@
 rootProject.name = 'mts-fintech'
-
+include 'animal-config-starter'
+include 'AnimalApplication'

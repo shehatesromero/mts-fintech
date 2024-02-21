@@ -1,0 +1,8 @@
+application:
+  animal-data:
+    names: [ Buddy, Baxter, Jake, Daisy, Cooper, Luke, Max, Oliver, Rocky, Charlie ]
+    dog-breeds: [ Affenpinscher, Boston Terrier, Welsh Terrier, Pug ]
+    cat-breeds: [ British Shorthair, Maine Coon, Asian cat, Munchkin ]
+    shark-breeds: [ The Hammerhead Shark, The White Shark, Japanese shark, Black spiny shark ]
+    wolf-breeds: [ Maned Wolf, Lyre Wolf, Red Wolf, Mackenzie Wolf ]
+    characters: [ Too friendly, Nervous, Ordinary, Wayward, Timid ]

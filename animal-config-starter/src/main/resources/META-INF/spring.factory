@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=
+ru.mts.hw7.config.AnimalDataAutoConfiguration

@@ -5,29 +5,30 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import ru.mts.hw7.config.AnimalDataAutoConfiguration;
-import ru.mts.hw7.domain.abstraction.Animal;
-import ru.mts.hw8.config.TestConfiguration;
+import ru.mts.hw7.config.AppConfig;
+import ru.mts.hw8.config.TestConfig;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(classes = AnimalDataAutoConfiguration.class)
 @ActiveProfiles("test")
-@Import(TestConfiguration.class)
+@SpringBootTest(classes = {AnimalDataAutoConfiguration.class, AppConfig.class, TestConfig.class})
 class AnimalServiceTest {
+
     @Autowired
-    ObjectProvider<CreateAnimalService> createAnimalServicesBeanProvider;
-    CreateAnimalService prototype;
-    Animal animal;
+    private ObjectProvider<CreateAnimalService> createAnimalServicesBeanProvider;
+
     @DisplayName("Проверка инициализации сервиса после beanPostProcessor")
     @Test
     void testInitAfterBeanPostProcessor() {
+        var prototype = createAnimalServicesBeanProvider.getIfAvailable();
 
-        prototype = createAnimalServicesBeanProvider.getIfAvailable();
-        animal = prototype.createAnimal();
+        assertNotNull(prototype);
+
+        var animal = prototype.createAnimal();
+
         assertNotNull(animal);
-
     }
+
 }

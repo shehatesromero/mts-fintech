@@ -58,6 +58,7 @@ public abstract class BaseAnimalFactory<T extends Animal> implements AnimalFacto
                     .findFirst()
                     .orElseThrow();
 
+            //noinspection unchecked
             return (T) targetConstructor.newInstance(breed, name, cost, character, birthDate);
 
         } catch (InstantiationException | InvocationTargetException | IllegalAccessException e) {

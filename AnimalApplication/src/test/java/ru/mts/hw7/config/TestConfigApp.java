@@ -1,24 +1,26 @@
-package ru.mts.hw8.config;
+package ru.mts.hw7.config;
 
 import org.mockito.Mockito;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import ru.mts.hw7.config.bpp.MyTestBeanPostProcessor;
 import ru.mts.hw7.domain.Cat;
 import ru.mts.hw7.domain.Dog;
 import ru.mts.hw7.domain.Shark;
 import ru.mts.hw7.domain.Wolf;
-import ru.mts.hw7.domain.enums.AnimalType;
 import ru.mts.hw7.factory.AbstractAnimalFactory;
 import ru.mts.hw7.factory.AnimalFactory;
 import ru.mts.hw7.factory.impl.CatFactory;
 import ru.mts.hw7.factory.impl.DogFactory;
 import ru.mts.hw7.factory.impl.SharkFactory;
 import ru.mts.hw7.factory.impl.WolfFactory;
-import ru.mts.hw8.config.bpp.MyTestBeanPostProcessor;
-import ru.mts.hw8.service.CreateAnimalService;
-import ru.mts.hw8.service.impl.CreateAnimalServiceImpl;
+import ru.mts.hw7.repository.AnimalsRepository;
+import ru.mts.hw7.repository.AnimalsRepositoryImpl;
+import ru.mts.hw7.service.CreateAnimalService;
+import ru.mts.hw7.service.impl.CreateAnimalServiceImpl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,7 +30,7 @@ import static ru.mts.hw7.domain.enums.AnimalType.*;
 
 @Profile("test")
 @TestConfiguration
-public class TestConfig {
+public class TestConfigApp {
 
     @Primary
     @Bean(name = "mts_MyTestBeanPostProcessor")
@@ -69,7 +71,6 @@ public class TestConfig {
                         new Wolf("White", "Mock_Bars",
                                 BigDecimal.valueOf(0.1).setScale(2, RoundingMode.HALF_UP),
                                 LocalDate.of(2020, 1, 8))
-
                 );
 
         Mockito.when(sharkFactory.createAnimal())
@@ -84,7 +85,7 @@ public class TestConfig {
         Mockito.when(animalFactory.createAnimalFactory(Mockito.any()))
                 .thenAnswer(invocation -> {
                     final AnimalFactory<?> result;
-                    final AnimalType animalTypeArg = invocation.getArgument(0, AnimalType.class);
+                    final ru.mts.hw7.domain.enums.AnimalType animalTypeArg = invocation.getArgument(0, ru.mts.hw7.domain.enums.AnimalType.class);
 
                     if (DOG.equals(animalTypeArg)) {
                         result = dogFactory;
@@ -95,7 +96,7 @@ public class TestConfig {
                     } else if (SHARK.equals(animalTypeArg)) {
                         result = sharkFactory;
                     } else {
-                        throw new UnsupportedOperationException("Un");
+                        throw new UnsupportedOperationException("Unsupported animal type");
                     }
 
                     return result;
@@ -109,4 +110,12 @@ public class TestConfig {
     public CreateAnimalService createAnimalService(AbstractAnimalFactory animalFactory) {
         return new CreateAnimalServiceImpl(animalFactory);
     }
+
+    // Бин AnimalsRepository
+    @Bean
+    public AnimalsRepository animalsRepository(ObjectProvider<CreateAnimalService> createAnimalServicesBeanProvider) {
+        return new AnimalsRepositoryImpl(10, createAnimalServicesBeanProvider);
+    }
+
+
 }

@@ -8,6 +8,7 @@ public enum AnimalType {
     DOG,
     CAT,
     SHARK,
-    WOLF
+    WOLF,
+    UNKNOWN
 
 }

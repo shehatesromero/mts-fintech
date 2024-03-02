@@ -21,9 +21,15 @@ dependencies {
 
     implementation 'org.slf4j:slf4j-api:1.7.32'
     implementation 'ch.qos.logback:logback-classic:1.2.6'
+
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.4'
+    testImplementation 'org.mockito:mockito-core:5.10.0'
 }
 
 test {
     useJUnitPlatform()
 }
 
+bootJar {
+    duplicatesStrategy = 'exclude' // Используйте 'exclude', чтобы исключить дубликаты
+}

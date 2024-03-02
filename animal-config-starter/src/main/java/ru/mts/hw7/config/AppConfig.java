@@ -13,8 +13,8 @@ import ru.mts.hw7.domain.Wolf;
 import ru.mts.hw7.domain.abstraction.Animal;
 import ru.mts.hw7.factory.AbstractAnimalFactory;
 import ru.mts.hw7.factory.impl.*;
-import ru.mts.hw8.service.CreateAnimalService;
-import ru.mts.hw8.service.impl.CreateAnimalServiceImpl;
+import ru.mts.hw7.service.CreateAnimalService;
+import ru.mts.hw7.service.impl.CreateAnimalServiceImpl;
 
 /**
  * @author Vladislav Gruzdov

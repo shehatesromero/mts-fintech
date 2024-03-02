@@ -11,8 +11,9 @@ import ru.mts.hw7.config.AppConfig;
 import ru.mts.hw7.domain.abstraction.Animal;
 import ru.mts.hw7.domain.enums.AnimalType;
 import ru.mts.hw7.factory.AbstractAnimalFactory;
+import ru.mts.hw7.service.CreateAnimalService;
+import ru.mts.hw7.service.impl.CreateAnimalServiceImpl;
 import ru.mts.hw8.config.TestConfig;
-import ru.mts.hw8.service.impl.CreateAnimalServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 

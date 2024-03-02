@@ -16,9 +16,9 @@ import ru.mts.hw7.factory.impl.CatFactory;
 import ru.mts.hw7.factory.impl.DogFactory;
 import ru.mts.hw7.factory.impl.SharkFactory;
 import ru.mts.hw7.factory.impl.WolfFactory;
+import ru.mts.hw7.service.CreateAnimalService;
+import ru.mts.hw7.service.impl.CreateAnimalServiceImpl;
 import ru.mts.hw8.config.bpp.MyTestBeanPostProcessor;
-import ru.mts.hw8.service.CreateAnimalService;
-import ru.mts.hw8.service.impl.CreateAnimalServiceImpl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

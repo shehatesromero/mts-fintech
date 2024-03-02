@@ -1,9 +1,9 @@
-package ru.mts.hw8.service.impl;
+package ru.mts.hw7.service.impl;
 
 import ru.mts.hw7.domain.abstraction.Animal;
 import ru.mts.hw7.domain.enums.AnimalType;
 import ru.mts.hw7.factory.AbstractAnimalFactory;
-import ru.mts.hw8.service.CreateAnimalService;
+import ru.mts.hw7.service.CreateAnimalService;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;

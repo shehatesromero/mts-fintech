@@ -1,4 +1,4 @@
-package ru.mts.hw8.service;
+package ru.mts.hw7.service;
 
 import ru.mts.hw7.domain.abstraction.Animal;
 import ru.mts.hw7.factory.AnimalSimpleFactory;

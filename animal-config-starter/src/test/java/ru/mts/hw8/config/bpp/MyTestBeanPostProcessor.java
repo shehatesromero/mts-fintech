@@ -2,7 +2,7 @@ package ru.mts.hw8.config.bpp;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import ru.mts.hw8.service.CreateAnimalService;
+import ru.mts.hw7.service.CreateAnimalService;
 
 import javax.annotation.Nullable;
 

@@ -1,0 +1,10 @@
+spring:
+  profiles: test
+application:
+  animal-data:
+    names: [ testBuddy, testBaxter, testJake, testDaisy ]
+    dog-breeds: [ testAffenpinscher, testTerrier, testWelsh, testPug ]
+    cat-breeds: [ testShortHair, testMaineCoon, testAsian, testMunchkin ]
+    shark-breeds: [ testHammerheadShark, testWhiteShark, testJapaneseShark, testBlackSpinyShark ]
+    wolf-breeds: [ testManedWolf, testLyreWolf, testRedWolf, testMackenzieWolf ]
+    characters: [ testFriendly, testNervous, testOrdinary, testWayward ]

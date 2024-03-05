@@ -15,6 +15,9 @@ import ru.mts.hw7.service.CreateAnimalService;
 import ru.mts.hw7.service.impl.CreateAnimalServiceImpl;
 import ru.mts.hw8.config.TestConfig;
 
+import java.util.List;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
@@ -50,14 +53,12 @@ class AnimalServiceTest {
         assertNotNull(prototype);
 
         // Act
-        Animal[] animals = prototype.createUniqueAnimals(n);
+        Map<String, List<Animal>> animalsMap = prototype.createUniqueAnimals(n);
+        List<Animal> animalsList = animalsMap.get(prototype.NAME);
 
         // Assert
-        assertNotNull(animals);
-        assertEquals(n, animals.length);
-        for (Animal animal : animals) {
-            assertNotNull(animal);
-        }
+        assertNotNull(animalsMap);
+        assertEquals(1, animalsMap.size());
     }
 
     @DisplayName("Checking exception in createUniqueAnimals with negative N")
@@ -68,7 +69,7 @@ class AnimalServiceTest {
         var prototype = createAnimalServicesImplBeanProvider.getIfAvailable();
 
         // Act & Assert
-        assertThrows(NegativeArraySizeException.class, () -> prototype.createUniqueAnimals(n));
+        assertThrows(IllegalArgumentException.class, () -> prototype.createUniqueAnimals(n));
     }
 
     @DisplayName("Test Animal Creation via AbstractAnimalFactory")

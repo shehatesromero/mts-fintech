@@ -2,6 +2,7 @@ package ru.mts.hw7.repository;
 
 import ru.mts.hw7.domain.abstraction.Animal;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 public interface AnimalsRepository {
@@ -12,23 +13,29 @@ public interface AnimalsRepository {
      * При помощи цикла находит всех животных,
      * которые родились в високосный год
      *
-     * @return Массив из имен животных
+     * @return Map. Ключ - тип + имя животного, значение - дата
      */
-    String[] findLeapYearNames();
+    Map<String, LocalDate> findLeapYearNames();
 
     /**
      * При помощи цикла for находит всех
      * животных, возраст которых больше N лет
      *
      * @param n Возраст, выше которого нужно найти
-     * @return Массив подходящих животных
+     * @return Map. Ключ - животное, значение - возраст
      */
-    Animal[] findOlderAnimal(int n);
+    Map<Animal, Integer> findOlderAnimal(int n);
 
-    //Ищет дубликаты животных
-    Map<Animal, Integer> findDuplicate();
+    /**
+     * Ищет дубликаты животных
+     *
+     * @return Мап. Ключ - тип животного, значение - количество дубликата
+     */
+    Map<String, Integer> findDuplicate();
 
-    //Печатает дубликаты животных
+    /**
+     * Выводит результат работы findDuplicate()
+     */
     void printDuplicate();
 
 }

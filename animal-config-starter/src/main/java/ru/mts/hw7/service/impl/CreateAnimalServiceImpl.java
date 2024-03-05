@@ -5,7 +5,7 @@ import ru.mts.hw7.domain.enums.AnimalType;
 import ru.mts.hw7.factory.AbstractAnimalFactory;
 import ru.mts.hw7.service.CreateAnimalService;
 
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -53,34 +53,47 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         this.animalType = animalType;
     }
 
-    // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию при помощи цикла do while.
+    /**
+     * Метод createUniqueAnimals() создает 10 уникальных животных и возвращает их информацию в Map.
+     *
+     * @return Map, где ключ - тип животного, значение - список созданных животных
+     */
     @Override
-    public Animal[] createUniqueAnimals() {
+    public Map<String, List<Animal>> createUniqueAnimals() {
         var factory = abstractAnimalFactory.createAnimalFactory(animalType);
         int animalCounter = 0;
-        Animal[] animals = new Animal[10];
+        Map<String, List<Animal>> animalsMap = new HashMap<>();
 
         do {
-            animals[animalCounter] = factory.createAnimal();
+            Animal animal = factory.createAnimal();
+
+            animalsMap.computeIfAbsent(animalType.toString(), k -> new ArrayList<>()).add(animal);
+
             animalCounter++;
         } while (animalCounter < 10);
 
-        return animals; // Возвращаем массив созданных животных
+        return animalsMap;
     }
 
     /**
-     * Метод createUniqueAnimals(int n) создает заданное количество уникальных животных и выводит их информацию
-     * при помощи цикла for.
+     * Метод createUniqueAnimals() создает n уникальных животных и возвращает их информацию в Map.
+     *
+     * @param n - количество животных
+     * @return Map, где ключ - тип животного, значение - список созданных животных
      */
-    public Animal[] createUniqueAnimals(int n) {
+    public Map<String, List<Animal>> createUniqueAnimals(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Wrong n for createUniqueAnimals");
+        }
         var factory = abstractAnimalFactory.createAnimalFactory(animalType);
+        Map<String, List<Animal>> animalsMap = new HashMap<>();
 
-        Animal[] animals = new Animal[n]; // Создаем массив для хранения животных
         for (int i = 0; i < n; i++) {
-            animals[i] = factory.createAnimal();
+            Animal animal = factory.createAnimal();
+
+            animalsMap.computeIfAbsent(animalType.toString(), k -> new ArrayList<>()).add(animal);
         }
 
-        return animals;
+        return animalsMap;
     }
-
 }

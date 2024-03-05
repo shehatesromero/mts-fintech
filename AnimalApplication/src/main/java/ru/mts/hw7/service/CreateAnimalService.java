@@ -1,7 +1,9 @@
 package ru.mts.hw7.service;
 
 import ru.mts.hw7.domain.abstraction.Animal;
-import ru.mts.hw7.factory.AnimalSimpleFactory;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Интерфейс CreateAnimalService предоставляет абстракцию для создания животных.
@@ -24,18 +26,10 @@ public interface CreateAnimalService {
      */
     void initAnimalType();
 
-    // Метод createUniqueAnimals() создает 10 уникальных животных и выводит их информацию.
-    default Animal[] createUniqueAnimals() {
-        int animalCounter = 0;
-        Animal[] animals = new Animal[10];
-
-        while (animalCounter < 10) {
-            animals[animalCounter] = AnimalSimpleFactory.createRandomAnimal();
-            animalCounter++;
-        }
-
-        return animals;
-    }
-
-
+    /**
+     * Дефолтный метод генерации
+     * десяти различных животных
+     * циклом while
+     */
+    Map<String, List<Animal>> createUniqueAnimals();
 }

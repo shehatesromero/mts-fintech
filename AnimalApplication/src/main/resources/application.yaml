@@ -1,3 +1,6 @@
 application:
   repositoryCapacity: 10
   animalCount: 20
+spring:
+  main:
+    allow-bean-definition-overriding: true

@@ -123,15 +123,16 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animals == null) {
             throw new IllegalArgumentException("Animals array cannot be null");
         }
-        Set<String> keysMap = animals.keySet();
-        for (String key : keysMap) {
-            List<Animal> animalsList = animals.get(key);
-            for (Animal animal : animalsList) {
+
+        for (Map.Entry<String, List<Animal>> entry : animals.entrySet()) {
+            for (Animal animal : entry.getValue()) {
                 if (animal == null) {
                     throw new IllegalArgumentException("Some animal is null");
                 }
             }
         }
+
     }
+
 }
 

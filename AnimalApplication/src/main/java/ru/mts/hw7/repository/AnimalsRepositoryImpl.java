@@ -53,13 +53,15 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public Map<Animal, Integer> findOlderAnimal(int n) {
         validateAnimals();
-        return animals.values().stream()
+        return animals.values()
+                .stream()
                 .flatMap(List::stream)
                 .collect(Collectors.groupingBy(
                         animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears(),
                         Collectors.toList()
                 ))
-                .entrySet().stream()
+                .entrySet()
+                .stream()
                 .filter(entry -> entry.getKey() > n)
                 .findFirst()
                 .map(entry -> entry.getValue().stream()
@@ -70,13 +72,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .orElseGet(() -> {
                     Map<Animal, Integer> result = new HashMap<>();
                     animals.values().stream()
-                            .flatMap(List::stream)
+                            .flatMap(Collection::stream)
                             .max(Comparator.comparing(animal ->
                                     Period.between(animal.getBirthDate(), LocalDate.now()).getYears()))
                             .ifPresent(animal -> {
                                 int oldestYearsOld = Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
                                 result.put(animal, oldestYearsOld);
                             });
+
                     return result;
                 });
     }
@@ -86,12 +89,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         validateAnimals();
 
         // Используем Stream API и groupingBy для поиска дубликатов
-        Map<String, List<Animal>> animalDuplicates = animals.values().stream()
+        Map<String, List<Animal>> animalDuplicates = animals.values()
+                .stream()
                 .flatMap(Collection::stream)  // Вместо List::stream
                 .collect(Collectors.groupingBy(Animal::toString));
 
         // Фильтруем только те записи, у которых количество больше 1
-        Map<String, List<Animal>> animalsReturn = animalDuplicates.entrySet().stream()
+        Map<String, List<Animal>> animalsReturn = animalDuplicates.entrySet()
+                .stream()
                 .filter(entry -> entry.getValue().size() > 1)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
@@ -104,14 +109,20 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalDuplicates.isEmpty()) {
             System.out.println("There is no duplicates");
         } else {
-            animalDuplicates.forEach((breed, animalsList) -> {
-                System.out.println(breed + " duplicates:");
-                //при желании можно вывести animal.getNames
-                animalsList.forEach(animal -> System.out.println("  " + animal));
+            animalDuplicates.forEach((breed, animals) -> {
+                if (animals != null && !animals.isEmpty()) {
+                    String msg = breed + " duplicates:" +
+                            animals.stream()
+                                    .filter(Objects::nonNull)
+                                    .map(String::valueOf)
+                                    .collect(Collectors.joining(" "));
+
+                    //при желании можно вывести animal.getNames
+                    System.out.println(msg);
+                }
             });
         }
     }
-
 
     public void findAverageAge(List<Animal> animalsList) {
         double averageAge = animalsList.stream()
@@ -126,12 +137,15 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public List<Animal> findOldAndExpensive(List<Animal> animalsList) {
         BigDecimal averageCost = animalsList.stream()
                 .map(Animal::getCost)
+                .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .divide(BigDecimal.valueOf(animalsList.size()), 2, RoundingMode.HALF_UP);
 
         return animalsList.stream()
-                .filter(animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > 5
-                        && animal.getCost().compareTo(averageCost) > 0)
+                .filter(animal ->
+                        (Period.between(animal.getBirthDate(), LocalDate.now()).getYears() > 5)
+                                && Objects.nonNull(animal.getCost())
+                                && (animal.getCost().compareTo(averageCost) > 0))
                 .sorted(Comparator.comparing(Animal::getBirthDate))
                 .collect(Collectors.toList());
     }

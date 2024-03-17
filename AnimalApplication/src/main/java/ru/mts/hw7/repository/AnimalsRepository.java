@@ -1,6 +1,7 @@
 package ru.mts.hw7.repository;
 
 import ru.mts.hw7.domain.abstraction.Animal;
+import ru.mts.hw7.exception.InsufficientArraySizeException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -66,6 +67,6 @@ public interface AnimalsRepository {
      * @param animalsList Список животных.
      * @return Список имен.
      */
-    List<String> findMinCostAnimals(List<Animal> animalsList);
+    List<String> findMinCostAnimals(List<Animal> animalsList) throws InsufficientArraySizeException;
 
 }

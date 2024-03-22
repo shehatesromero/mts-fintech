@@ -1,5 +1,8 @@
 package ru.mts.hw7.scheduling;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -15,6 +18,7 @@ import java.util.List;
 @Component(AnimalsSchedulerMBean.NAME)
 public class AnimalsScheduler implements AnimalsSchedulerMBean {
 
+    private static final Logger log = LoggerFactory.getLogger(AnimalsScheduler.class);
 
     private final AnimalsRepository animalsRepository;
 
@@ -27,7 +31,7 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
     }
 
 
-    @Scheduled(fixedRate = 60 * 1000)
+    @Scheduled(fixedRate = 60 * 1_000)
     @Override
     public void printAllRepositoryMethods() {
 
@@ -35,31 +39,27 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
             System.out.println("Names in a leap year: ");
             System.out.println((animalsRepository.findLeapYearNames()));
         } catch (Exception e) {
-            System.out.println("Error occurred while finding leap year names: " + e.getMessage());
-            e.printStackTrace();
+            logError("Error occurred while finding leap year names", e);
         }
 
         try {
             System.out.println("Animals older " + animalCount + " years: ");
             System.out.println(animalsRepository.findOlderAnimal(animalCount));
         } catch (IllegalArgumentException e) {
-            System.out.println("Error occurred while finding older animals: " + e.getMessage());
-            e.printStackTrace();
+            logError("Error occurred while finding older animals", e);
         }
 
         try {
             animalsRepository.printDuplicate();
         } catch (Exception e) {
-            System.out.println("Error occurred while printing duplicates: " + e.getMessage());
-            e.printStackTrace();
+            logError("Error occurred while printing duplicates", e);
         }
 
         try {
             List<Animal> nullAnimals = null;
             animalsRepository.findAverageAge(nullAnimals);
         } catch (InvalidParameterException e) {
-            System.out.println("Error occurred while finding average age: " + e.getMessage());
-            e.printStackTrace();
+            logError("Error occurred while finding average age", e);
         }
 
         try {
@@ -68,8 +68,7 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
             List<Animal> oldAndExpensiveAnimals = animalsRepository.findOldAndExpensive(nullAnimals);
             oldAndExpensiveAnimals.forEach(System.out::println);
         } catch (InvalidParameterException e) {
-            System.out.println("Error occurred while finding old and expensive animals: " + e.getMessage());
-            e.printStackTrace();
+            logError("Error occurred while finding old and expensive animals", e);
         }
 
         try {
@@ -77,10 +76,14 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
             List<String> minCostAnimalNames = animalsRepository.findMinCostAnimals(animalsRepository.getAllAnimals().subList(0, 2));
             minCostAnimalNames.forEach(System.out::println);
         } catch (InsufficientArraySizeException e) {
-            System.out.println("InsufficientArraySizeException occurred: " + e.getMessage());
-            e.printStackTrace();
+            logError("InsufficientArraySizeException occurred", e);
         }
 
+    }
+
+    private void logError(String infoMessage, Exception e) {
+        log.error("{}: {}", infoMessage, e.getMessage());
+        log.error(ExceptionUtils.getStackTrace(e));
     }
 
 }

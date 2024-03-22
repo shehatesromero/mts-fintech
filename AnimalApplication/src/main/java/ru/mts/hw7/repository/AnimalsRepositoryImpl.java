@@ -159,6 +159,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalsList.contains(null)) {
             throw new InvalidParameterException("The list of animals cannot contain null elements");
         }
+
         BigDecimal averageCost = animalsList.stream()
                 .map(Animal::getCost)
                 .filter(Objects::nonNull)
@@ -208,10 +209,11 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public List<Animal> getAllAnimals() {
         validateAnimals();
 
-        return animals.values().stream()
+        return animals.values()
+                .stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
-
     }
+
 }
 

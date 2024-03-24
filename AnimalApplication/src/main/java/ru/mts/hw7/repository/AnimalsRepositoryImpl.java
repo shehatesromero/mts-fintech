@@ -2,6 +2,8 @@ package ru.mts.hw7.repository;
 
 import org.springframework.beans.factory.ObjectProvider;
 import ru.mts.hw7.domain.abstraction.Animal;
+import ru.mts.hw7.exception.InsufficientArraySizeException;
+import ru.mts.hw7.exception.InvalidParameterException;
 import ru.mts.hw7.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
@@ -52,6 +54,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public Map<Animal, Integer> findOlderAnimal(int n) {
+        // Проверка на некорректное значение аргумента
+        if (n < 0) {
+            throw new IllegalArgumentException("The value of the argument n cannot be negative");
+        }
         validateAnimals();
         return animals.values()
                 .stream()
@@ -125,6 +131,15 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     public void findAverageAge(List<Animal> animalsList) {
+        // Проверка на то, что List не null
+        if (animalsList == null) {
+            throw new InvalidParameterException("The list of animals cannot be null");
+        }
+
+        // Проверка на то, что элементы в List не null
+        if (animalsList.contains(null)) {
+            throw new InvalidParameterException("The list of animals cannot contain null elements");
+        }
         double averageAge = animalsList.stream()
                 .mapToDouble(animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears())
                 .average()
@@ -135,6 +150,16 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public List<Animal> findOldAndExpensive(List<Animal> animalsList) {
+        // Проверка на то, что List не null
+        if (animalsList == null) {
+            throw new InvalidParameterException("The list of animals cannot be null");
+        }
+
+        // Проверка на то, что элементы в List не null
+        if (animalsList.contains(null)) {
+            throw new InvalidParameterException("The list of animals cannot contain null elements");
+        }
+
         BigDecimal averageCost = animalsList.stream()
                 .map(Animal::getCost)
                 .filter(Objects::nonNull)
@@ -151,7 +176,12 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public List<String> findMinCostAnimals(List<Animal> animalsList) {
+    public List<String> findMinCostAnimals(List<Animal> animalsList) throws InsufficientArraySizeException {
+        // Проверка на то, что массив больше 3
+        if (animalsList.size() < 3) {
+            throw new InsufficientArraySizeException("The size of the array must be at least three");
+        }
+
         return animalsList.stream()
                 .sorted(Comparator.comparing(Animal::getCost))
                 .limit(3)
@@ -179,9 +209,11 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public List<Animal> getAllAnimals() {
         validateAnimals();
 
-        return animals.values().stream()
+        return animals.values()
+                .stream()
                 .flatMap(List::stream)
                 .collect(Collectors.toList());
     }
+
 }
 

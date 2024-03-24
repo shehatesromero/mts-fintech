@@ -12,9 +12,20 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
 
+
 public class AnimalsRepositoryImpl implements AnimalsRepository {
+
+    // Добавляем блокировки для обеспечения потокобезопасности
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
+
 
     private final int capacity;
 
@@ -33,7 +44,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public void postConstruct() {
         if (!initialized) {
             var prototype = createAnimalServicesBeanProvider.getIfAvailable();
-            animals = prototype.createUniqueAnimals();
+            // Используем ConcurrentHashMap для потокобезопасной мапы
+            animals = new ConcurrentHashMap<>(prototype.createUniqueAnimals());
         }
 
         initialized = true;
@@ -42,14 +54,19 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public Map<String, LocalDate> findLeapYearNames() {
         validateAnimals();
-        return animals.values().stream()
-                .flatMap(List::stream)
-                .filter(animal -> animal.getBirthDate().isLeapYear())
-                .collect(Collectors.toMap(
-                        animal -> animal.getBreed() + " " + animal.getName(),
-                        Animal::getBirthDate,
-                        (existing, replacement) -> existing.isAfter(replacement) ? existing : replacement
-                ));
+        readLock.lock();
+        try {
+            return animals.values().parallelStream()
+                    .flatMap(List::stream)
+                    .filter(animal -> animal.getBirthDate().isLeapYear())
+                    .collect(Collectors.toMap(
+                            animal -> animal.getBreed() + " " + animal.getName(),
+                            Animal::getBirthDate,
+                            (existing, replacement) -> existing.isAfter(replacement) ? existing : replacement
+                    ));
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Override
@@ -59,54 +76,61 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             throw new IllegalArgumentException("The value of the argument n cannot be negative");
         }
         validateAnimals();
-        return animals.values()
-                .stream()
-                .flatMap(List::stream)
-                .collect(Collectors.groupingBy(
-                        animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears(),
-                        Collectors.toList()
-                ))
-                .entrySet()
-                .stream()
-                .filter(entry -> entry.getKey() > n)
-                .findFirst()
-                .map(entry -> entry.getValue().stream()
-                        .collect(Collectors.toMap(
-                                animal -> animal,
-                                animal -> entry.getKey()
-                        )))
-                .orElseGet(() -> {
-                    Map<Animal, Integer> result = new HashMap<>();
-                    animals.values().stream()
-                            .flatMap(Collection::stream)
-                            .max(Comparator.comparing(animal ->
-                                    Period.between(animal.getBirthDate(), LocalDate.now()).getYears()))
-                            .ifPresent(animal -> {
-                                int oldestYearsOld = Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
-                                result.put(animal, oldestYearsOld);
-                            });
-
-                    return result;
-                });
+        readLock.lock();
+        try {
+            return animals.values()
+                    .parallelStream()
+                    .flatMap(List::stream)
+                    .collect(Collectors.groupingBy(
+                            animal -> Period.between(animal.getBirthDate(), LocalDate.now()).getYears(),
+                            Collectors.toList()
+                    ))
+                    .entrySet()
+                    .parallelStream()
+                    .filter(entry -> entry.getKey() > n)
+                    .findFirst()
+                    .map(entry -> entry.getValue().stream()
+                            .collect(Collectors.toMap(
+                                    animal -> animal,
+                                    animal -> entry.getKey()
+                            )))
+                    .orElseGet(() -> {
+                        Map<Animal, Integer> result = new ConcurrentHashMap<>();
+                        animals.values().parallelStream()
+                                .flatMap(Collection::stream)
+                                .max(Comparator.comparing(animal ->
+                                        Period.between(animal.getBirthDate(), LocalDate.now()).getYears()))
+                                .ifPresent(animal -> {
+                                    int oldestYearsOld = Period.between(animal.getBirthDate(), LocalDate.now()).getYears();
+                                    result.put(animal, oldestYearsOld);
+                                });
+                        return result;
+                    });
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Override
     public Map<String, List<Animal>> findDuplicate() {
         validateAnimals();
+        readLock.lock();
+        try {
+            // Используем Stream API и groupingBy для поиска дубликатов
+            Map<String, List<Animal>> animalDuplicates = animals.values()
+                    .stream()
+                    .flatMap(Collection::stream)  // Вместо List::stream
+                    .collect(Collectors.groupingBy(Animal::toString));
 
-        // Используем Stream API и groupingBy для поиска дубликатов
-        Map<String, List<Animal>> animalDuplicates = animals.values()
-                .stream()
-                .flatMap(Collection::stream)  // Вместо List::stream
-                .collect(Collectors.groupingBy(Animal::toString));
-
-        // Фильтруем только те записи, у которых количество больше 1
-        Map<String, List<Animal>> animalsReturn = animalDuplicates.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().size() > 1)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-
-        return animalsReturn;
+            // Фильтруем только те записи, у которых количество больше 1
+            Map<String, List<Animal>> animalsReturn = animalDuplicates.entrySet()
+                    .stream()
+                    .filter(entry -> entry.getValue().size() > 1)
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+            return animalsReturn;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     @Override

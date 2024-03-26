@@ -236,7 +236,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return animals.values()
                 .stream()
                 .flatMap(Collection::stream)
-                .collect(Collectors.toUnmodifiableList());
+                .collect(Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList));
     }
 
 }

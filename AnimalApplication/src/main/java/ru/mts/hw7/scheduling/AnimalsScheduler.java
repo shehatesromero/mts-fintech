@@ -56,16 +56,14 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
         }
 
         try {
-            List<Animal> nullAnimals = null;
-            animalsRepository.findAverageAge(nullAnimals);
+            animalsRepository.findAverageAge(animalsRepository.getAllAnimals());
         } catch (InvalidParameterException e) {
             logError("Error occurred while finding average age", e);
         }
 
         try {
             System.out.println("Old and Expensive Animals: ");
-            List<Animal> nullAnimals = null;
-            List<Animal> oldAndExpensiveAnimals = animalsRepository.findOldAndExpensive(nullAnimals);
+            List<Animal> oldAndExpensiveAnimals = animalsRepository.findOldAndExpensive(animalsRepository.getAllAnimals());
             oldAndExpensiveAnimals.forEach(System.out::println);
         } catch (InvalidParameterException e) {
             logError("Error occurred while finding old and expensive animals", e);
@@ -73,7 +71,7 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
 
         try {
             System.out.println("Top 3 Animals with Min Cost, sorted in reverse order: ");
-            List<String> minCostAnimalNames = animalsRepository.findMinCostAnimals(animalsRepository.getAllAnimals().subList(0, 2));
+            List<String> minCostAnimalNames = animalsRepository.findMinCostAnimals(animalsRepository.getAllAnimals());
             minCostAnimalNames.forEach(System.out::println);
         } catch (InsufficientArraySizeException e) {
             logError("InsufficientArraySizeException occurred", e);

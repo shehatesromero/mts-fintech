@@ -18,6 +18,8 @@ import java.util.List;
 @Component(AnimalsSchedulerMBean.NAME)
 public class AnimalsScheduler implements AnimalsSchedulerMBean {
 
+    private final ScheduledTasks scheduledTasks;
+
     private static final Logger log = LoggerFactory.getLogger(AnimalsScheduler.class);
 
     private final AnimalsRepository animalsRepository;
@@ -25,9 +27,11 @@ public class AnimalsScheduler implements AnimalsSchedulerMBean {
     private final int animalCount;
 
     @Autowired
-    public AnimalsScheduler(AppConfigProperties appConfigProperties, AnimalsRepository animalsRepository) {
+    public AnimalsScheduler(AppConfigProperties appConfigProperties, AnimalsRepository animalsRepository,
+                            ScheduledTasks scheduledTasks) {
         animalCount = appConfigProperties.getAnimalCount();
         this.animalsRepository = animalsRepository;
+        this.scheduledTasks = scheduledTasks;
     }
 
 
